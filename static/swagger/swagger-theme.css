@@ -1,0 +1,33 @@
+.swagger-ui .topbar {
+  background-color: var(--primary-0) !important;
+  box-shadow: none;
+}
+.swagger-ui .topbar .topbar-wrapper a {
+  color: var(--text-color) !important;
+}
+
+.swagger-ui .info {
+  background-color: var(--primary-0);
+  border-bottom: 1px solid var(--secondary-0);
+}
+.swagger-ui .info h2,
+.swagger-ui .info h3 {
+  color: var(--highlight-1);
+}
+
+.swagger-ui .btn {
+  background-color: var(--highlight-0) !important;
+  color: var(--primary-0) !important;
+  border: 1px solid var(--highlight-1) !important;
+}
+
+.swagger-ui .responses-inner .response-col_description__inner {
+  background-color: var(--primary-0);
+  color: var(--text-color);
+}
+
+.swagger-ui .microlight,
+.swagger-ui pre code {
+  background-color: var(--secondary-0);
+  color: var(--text-color);
+}

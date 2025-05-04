@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Michi Mochievee Archive</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nav/nav-styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/scrollbars.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='mediacard/mediacard-styles.css') }}">
+</head>
+
+<body class="nav-hide-on-load">
+
+  <div id="header-container"></div>
+
+  <main class="main-content" id="top">
+    <section class="hero" id="hero">
+      <img class="pfp" id="streamer-pfp" src="" alt="">
+      <div class="search-bar-wrapper">
+        <input type="text" class="search-bar" placeholder="Search the archives (dummy)">
+        <button class="search-button">Search</button>
+      </div>
+      <h1 id="hero-title">Welcome to Michi Mochievee's Archive</h1>
+      <p class="tagline">
+        An archive for VODs, videos, and other unforgettable moments throughout Michi's streaming journey!
+      </p>
+    </section>
+
+    <section class="browse-section">
+      <h2 class="browse-title">Browse</h2>
+
+      <div class="browse-row" id="streams-section">
+        <h3>
+          Streams <span class="icon-twitch">⚔</span>
+          <span class="hide-icon" data-target="streams-row">[hide]</span>
+        </h3>
+        <div class="horizontal-scroll" id="streams-row"></div>
+      </div>
+
+      <div class="browse-row" id="videos-section">
+        <h3>
+          Videos <span class="icon-twitch">⚔</span>
+          <span class="hide-icon" data-target="videos-row">[hide]</span>
+        </h3>
+        <div class="horizontal-scroll" id="videos-row"></div>
+      </div>
+
+      <div class="browse-row" id="clips-section">
+        <h3>Clips <span class="hide-icon" data-target="clips-row">[hide]</span></h3>
+        <div class="horizontal-scroll" id="clips-row"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script>
+    const partialUrls = {
+      nav: "{{ url_for('partial_nav') }}",
+      mediacard: "{{ url_for('partial_mediacard') }}",
+      footer: "{{ url_for('static', filename='footer/footer.html') }}"
+    };
+  </script>
+
+  <script src="{{ url_for('static', filename='js/loadPartials.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='nav/nav-script.js') }}"></script>
+
+  <script type="module">
+    import { loadMediacardTemplate, createMediacardElement } from "{{ url_for('static', filename='mediacard/mediacard-script.js') }}";
+
+    async function waitForNonEmptyArrays() {
+      console.log("[index.html] waitForNonEmptyArrays() => waiting for allArchivedData to have items...");
+      return new Promise((resolve) => {
+        let attempts = 0;
+        const maxAttempts = 1000;
+
+        const interval = setInterval(() => {
+          attempts++;
+
+          if (!window.allArchivedData) return;
+          const sLen = window.allArchivedData.streams?.length || 0;
+          const vLen = window.allArchivedData.vods?.length || 0;
+          const cLen = window.allArchivedData.clips?.length || 0;
+
+          if ((sLen + vLen + cLen) > 0) {
+            console.log(`[index.html] Found non-empty arrays (streams=${sLen}, vods=${vLen}, clips=${cLen})`);
+            clearInterval(interval);
+            resolve();
+          } else if (attempts >= maxAttempts) {
+            console.warn("[index.html] Timed out waiting for data to load.");
+            clearInterval(interval);
+            resolve();
+          }
+        }, 100);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      console.log("[index.html] DOMContentLoaded => load partial + wait for data...");
+      await loadMediacardTemplate();
+      await waitForNonEmptyArrays();
+
+      console.log("[index.html] ... now rendering items ...");
+
+      const sRow = document.getElementById('streams-row');
+      const vRow = document.getElementById('videos-row');
+      const cRow = document.getElementById('clips-row');
+
+      sRow.innerHTML = '';
+      vRow.innerHTML = '';
+      cRow.innerHTML = '';
+
+      for (const item of (window.allArchivedData.streams || [])) {
+        const el = createMediacardElement(item);
+        sRow.appendChild(el);
+      }
+      for (const item of (window.allArchivedData.vods || [])) {
+        const el = createMediacardElement(item);
+        vRow.appendChild(el);
+      }
+      for (const item of (window.allArchivedData.clips || [])) {
+        const el = createMediacardElement(item);
+        cRow.appendChild(el);
+      }
+
+      initHideIcons();
+      console.log("[index.html] done rendering items =>", {
+        streams: window.allArchivedData.streams.length,
+        vods: window.allArchivedData.vods.length,
+        clips: window.allArchivedData.clips.length
+      });
+    });
+
+    function initHideIcons() {
+      document.querySelectorAll('.hide-icon').forEach(icon => {
+        icon.addEventListener('click', () => {
+          const targetId = icon.getAttribute('data-target');
+          const targetEl = document.getElementById(targetId);
+          if (!targetEl) return;
+          const isHidden = targetEl.classList.toggle('hidden');
+          icon.textContent = isHidden ? '[show]' : '[hide]';
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

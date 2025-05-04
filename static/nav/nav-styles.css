@@ -1,0 +1,253 @@
+/*  -------- core bar ---------------------------------------------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--primary-0);
+  height: 60px;
+  transform: translateY(-100%);
+  transition: transform .3s;
+  z-index: 999;
+}
+
+.site-header.visible {
+  transform: translateY(0);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+
+.nav-logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  opacity: 0;
+  margin-left: -50px;
+  transition: opacity .3s, margin-left .3s;
+}
+
+.site-header.visible.pfp-active .nav-logo img {
+  opacity: 1;
+  margin-left: 0;
+}
+
+.nav-browse {
+  margin-left: 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.nav-browse:hover {
+  color: var(--highlight-0);
+}
+
+.nav-inline {
+  display: flex;
+  list-style: none;
+  margin: 0 0 0 1rem;
+  padding: 0;
+  gap: 1rem;
+}
+
+.nav-inline a,
+.nav-panel a.dropbtn {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.4rem 0.6rem;
+}
+
+.nav-inline a:hover,
+.nav-panel a.dropbtn:hover {
+  color: var(--highlight-0);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* theme toggle */
+.theme-toggle {
+  cursor: pointer;
+  font-size: 1.4rem;
+  user-select: none;
+  transition: transform .3s, margin-right .3s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle.toggled #themeIcon {
+  transform: rotate(180deg);
+}
+
+#themeIcon {
+  transition: transform .3s;
+}
+
+/* burger */
+.burger {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  position: relative;
+  transition: opacity .35s ease;
+}
+
+.burger .bar {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  height: 3px;
+  background: var(--text-color);
+  border-radius: 2px;
+  transition: transform .3s ease, opacity .3s;
+}
+
+.burger .bar:nth-child(1) {
+  top: 8px;
+}
+
+.burger .bar:nth-child(2) {
+  top: 15px;
+}
+
+.burger .bar:nth-child(3) {
+  top: 22px;
+}
+
+/* ---------- dropdown menus for desktop --------------------------- */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  background: var(--primary-0);
+  border: 1px solid var(--secondary-0);
+  border-radius: 4px;
+  padding: 0.3rem 0.5rem;
+  list-style: none;
+  margin: 0;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown.forced-open .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item a {
+  white-space: nowrap;
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.dropdown-item a:hover {
+  color: var(--highlight-0);
+}
+
+/* ---------- mobile panel ---------------------------------------- */
+.nav-panel {
+  position: fixed;
+  top: 60px;
+  right: 0;
+  width: 260px;
+  max-height: 0;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  background: var(--primary-0);
+  border-left: 1px solid var(--secondary-0);
+  transition: max-height .3s ease;
+  z-index: 998;
+}
+
+.nav-panel.mobile-open {
+  max-height: 600px;
+}
+
+.nav-panel>li {
+  border-bottom: 1px solid var(--secondary-0);
+}
+
+.nav-panel>li:last-child {
+  border-bottom: none;
+}
+
+.nav-panel .dropdown-menu {
+  position: static;
+  padding-left: 1rem;
+  border: none;
+  display: none;
+}
+
+.nav-panel .dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* ---------- responsiveness -------------------------------------- */
+@media (max-width: 980px) {
+
+  .nav-inline {
+    display: none;
+  }
+
+  .burger {
+    display: block;
+    opacity: 0;
+  }
+
+  .theme-toggle {
+    margin-right: 40px;
+  }
+
+  body.breakpoint .theme-toggle {
+    margin-right: 12px;
+  }
+
+  body.breakpoint .burger {
+    opacity: 1;
+  }
+}
+
+/* ---------- very narrow: shrink burger bars sequentially -------- */
+@media (max-width: 980px) {
+  .burger .bar {
+    animation: barIn .4s both;
+  }
+
+  .burger .bar:nth-child(2) {
+    animation-delay: .05s;
+  }
+
+  .burger .bar:nth-child(3) {
+    animation-delay: .10s;
+  }
+
+  @keyframes barIn {
+    from {
+      transform: translateX(30px);
+      opacity: 0;
+    }
+
+    to {
+      transform: none;
+      opacity: 1;
+    }
+  }
+}

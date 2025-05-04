@@ -1,0 +1,138 @@
+/* ---------- original card ---------------------------------------- */
+.stream-item {
+  width: 240px;
+  flex-shrink: 0;
+  background: transparent;
+  position: relative;
+  color: var(--text-color);
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.5rem;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
+}
+
+.stream-item:hover {
+  border: 1px solid var(--highlight-1);
+}
+
+.thumbnail-container {
+  width: 100%;
+  position: relative;
+}
+
+.stream-thumbnail {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.stream-text-info {
+  margin-top: 0.5rem;
+}
+
+.stream-title {
+  font-size: 1rem;
+  margin: 0.5rem 0 0.3rem;
+  line-height: 1.2;
+}
+
+.stream-meta {
+  font-size: 0.85rem;
+  color: var(--secondary-0);
+}
+
+.stream-date {
+  font-size: 0.8rem;
+  color: var(--secondary-0);
+  margin-top: 0.15rem;
+}
+
+/* menu */
+.menu-wrapper {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.menu-button {
+  background: transparent;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  display: none;
+  position: absolute;
+  top: 1.8rem;
+  right: 0;
+  z-index: 999;
+  background: var(--primary-0);
+  border: 1px solid var(--secondary-0);
+  border-radius: 4px;
+}
+
+.menu-dropdown .menu-item {
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.menu-dropdown .menu-item:hover {
+  background: var(--highlight-0);
+  color: var(--primary-0);
+}
+
+.menu-wrapper:hover .menu-dropdown {
+  display: block;
+}
+
+/* ---------- horizontal variant ----------------------------------- */
+.stream-item.horizontal {
+  display: flex;
+  width: 100%;
+  max-height: 104px;
+  padding: 0.4rem;
+  border: none;
+}
+
+.stream-item.horizontal:hover {
+  border: none;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.stream-item.horizontal .thumbnail-container {
+  width: 168px;
+  flex: 0 0 168px;
+}
+
+.stream-item.horizontal .stream-thumbnail {
+  width: 100%;
+  height: 94px;
+}
+
+.stream-item.horizontal .stream-text-info {
+  margin: 0 0 0 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.stream-item.horizontal .stream-title {
+  font-size: 0.95rem;
+}
+
+.stream-item.horizontal .stream-meta {
+  font-size: 0.8rem;
+}
+
+.stream-item.horizontal .stream-date {
+  font-size: 0.75rem;
+}
+
+.stream-item.horizontal .stream-description {
+  display: none;
+}

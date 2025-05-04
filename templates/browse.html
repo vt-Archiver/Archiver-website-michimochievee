@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Michi Mochievee Archive – Browse</title>
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nav/nav-styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/scrollbars.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='mediacard/mediacard-styles.css') }}">
+
+  <!-- browse-page styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='browse/browse-styles-main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='browse/browse-styles-filter.css') }}">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
+</head>
+
+<body class="page-with-nav">
+  <div id="header-container"></div>
+
+  <main id="browse-main" class="main-content">
+    <section class="browse-hero">
+      <h1 class="browse-title">Browse Archive</h1>
+      <div class="browse-searchbar">
+        <input id="browseSearchInput" class="search-bar" type="text" placeholder="Search all content…">
+        <button id="browseSearchBtn" class="search-button">Search</button>
+      </div>
+      <p class="browse-subtext">
+        Filter by Livestreams, Videos, or Clips – or search any term.
+      </p>
+    </section>
+
+    <section class="browse-filter-bar">
+      <button class="browse-filter-btn" data-type="livestreams">Livestreams</button>
+      <button class="browse-filter-btn" data-type="videos">Videos</button>
+      <button class="browse-filter-btn" data-type="clips">Clips</button>
+      <button class="browse-filter-btn" data-type="all">All</button>
+    </section>
+
+    <!-- grid fills incrementally -->
+    <section id="browseGrid" class="browse-grid"></section>
+    <!-- invisible trigger for Intersection Observer -->
+    <div id="scrollSentinel"></div>
+  </main>
+
+  <div id="footer-container"></div>
+
+  <script>
+    const partialUrls = {
+      nav: "{{ url_for('partial_nav') }}",
+      footer: "{{ url_for('static', filename='footer/footer.html') }}"
+    };
+  </script>
+
+  <!-- global bootstrap & nav -->
+  <script src="{{ url_for('static', filename='js/loadPartials.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='nav/nav-script.js') }}"></script>
+
+  <!-- browse-page logic (new lazy loader) -->
+  <script type="module" src="{{ url_for('static', filename='browse/browse-script-main.js') }}"></script>
+</body>
+
+</html>

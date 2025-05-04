@@ -1,0 +1,439 @@
+:root {
+  --gap: 12px;
+  --ctrl-h: 46px;
+}
+
+/* ───────── VIDEO COLUMN / THEATRE TRANSITION ───────── */
+#video-col {
+  flex: 0 0 auto;
+  width: 72%;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  transition: width .4s ease;
+}
+
+body.theatre #video-col {
+  width: 100%;
+}
+
+@media(max-width:980px) {
+  #video-col {
+    width: 100%;
+  }
+}
+
+#video-player {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 6px;
+  display: block;
+  max-height: 100%;
+  transition: filter .3s ease, max-height .4s ease;
+}
+
+body.theatre #video-player {
+  max-height: 88vh;
+}
+
+.player-shell.scrubbing #video-player {
+  filter: blur(3px);
+}
+
+.player-shell {
+  position: relative;
+}
+
+/* ───────── TIMELINE BAR ───────── */
+#progress-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  cursor: pointer;
+  transition: width .4s ease, height .25s ease, bottom .25s ease;
+  pointer-events: none;
+}
+
+#progress-bg {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary-0);
+  border-radius: 1.5px;
+}
+
+#progress-buffer,
+#progress-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 1.5px;
+  transition: width .1s linear;
+}
+
+#progress-buffer {
+  height: 3px;
+  background: var(--secondary-0);
+}
+
+#progress-fill {
+  height: 5px;
+  background: var(--highlight-1);
+}
+
+.player-shell:not(.controls-hidden) #progress-wrap,
+.player-shell.scrubbing #progress-wrap {
+  height: 18px;
+  bottom: calc(var(--ctrl-h) + 2*var(--gap));
+  pointer-events: auto;
+}
+
+/* ───────── TOOLTIP ───────── */
+.progress-tooltip {
+  position: absolute;
+  bottom: 26px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, .85);
+  color: #fff;
+  font-size: .75rem;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .12s ease;
+}
+
+.progress-tooltip.show {
+  opacity: 1;
+}
+
+/* ───────── CONTROL BAR / ICONS ───────── */
+#ctrl-bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--gap);
+  height: var(--ctrl-h);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .4rem .6rem;
+  font-size: 1rem;
+  transition: width .4s ease, opacity .35s, transform .35s;
+}
+
+.ctrl-btn {
+  background: rgba(0, 0, 0, .55);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 .35rem;
+  padding: .52rem;
+  display: flex;
+  align-items: center;
+  transition: background .2s, transform .15s ease;
+}
+
+.ctrl-btn:hover,
+.ctrl-btn:focus-visible {
+  transform: scale(1.15);
+}
+
+.ctrl-btn:hover,
+.ctrl-btn:active {
+  background: rgba(0, 0, 0, .75);
+}
+
+.ctrl-btn svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.ctrl-left {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+.ctrl-right {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+}
+
+/* ─── TIMER PILLS ─── */
+#current-time {
+  background: rgba(0, 0, 0, .55);
+  border-radius: 8px;
+  padding: .52rem .78rem;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+  cursor: pointer;
+  transition: background .2s, transform .15s ease;
+}
+
+#current-time:hover,
+#current-time:focus-visible {
+  background: rgba(0, 0, 0, .75);
+  transform: scale(1.05);
+}
+
+/* ─── VOLUME ─── */
+.vol-wrap {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.vol-wrap::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -4px;
+  right: -12px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .75);
+  opacity: 0;
+  transition: opacity .25s;
+}
+
+.vol-wrap:hover::before,
+.vol-wrap:focus-within::before {
+  opacity: 1;
+}
+
+.vol-wrap:hover>.ctrl-btn,
+.vol-wrap:focus-within>.ctrl-btn {
+  background: transparent;
+}
+
+.vol-wrap>* {
+  position: relative;
+  z-index: 1;
+}
+
+#vol-range {
+  --w-expanded: 240px;
+  --fill: 100%;
+  width: 0;
+  height: 6px;
+  opacity: 0;
+  pointer-events: none;
+  margin: 0 4px 0 6px;
+  cursor: pointer;
+  appearance: none;
+  transition: width .25s ease, opacity .25s ease;
+  background: linear-gradient(to right,
+      var(--highlight-1) 0%, var(--highlight-1) var(--fill),
+      var(--secondary-0) var(--fill), var(--secondary-0) 100%);
+  border-radius: 3px;
+}
+
+#vol-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  background: var(--highlight-1);
+  border-radius: 50%;
+  margin-top: -3px;
+}
+
+#vol-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--highlight-1);
+  border: none;
+  border-radius: 50%;
+}
+
+#vol-range::-ms-thumb {
+  width: 14px;
+  height: 14px;
+  background: var(--highlight-1);
+  border: none;
+  border-radius: 50%;
+  margin-top: -3px;
+}
+
+.vol-percent {
+  color: #fff;
+  font-size: .8rem;
+  opacity: 0;
+  user-select: none;
+  transition: opacity .25s ease;
+  margin-right: 2px;
+}
+
+.vol-wrap:hover #vol-range,
+#vol-range:hover,
+#vol-range:focus {
+  width: var(--w-expanded);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.vol-wrap:hover .vol-percent,
+#vol-range:hover+.vol-percent,
+#vol-range:focus+.vol-percent {
+  opacity: 1;
+}
+
+/* ─── PLAY <-> PAUSE morph ─── */
+.icon-play {
+  position: relative;
+  width: 1.4rem;
+  height: 1.4rem;
+  display: inline-block;
+}
+
+.icon-play svg {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  transition: opacity .2s, transform .2s;
+}
+
+.icon-play svg.alt {
+  opacity: 0;
+  transform: scale(.4) rotate(90deg);
+}
+
+.player-shell.playing .icon-play svg:first-child {
+  opacity: 0;
+  transform: scale(.4) rotate(-90deg);
+}
+
+.player-shell.playing .icon-play svg.alt {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ───────── SETTINGS PANEL (tabs) ───────── */
+.settings-panel {
+  position: absolute;
+  right: 16px;
+  bottom: calc(var(--ctrl-h) + 2*var(--gap) + 10px);
+  display: none;
+  width: 270px;
+  background: rgba(0, 0, 0, .9);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0;
+  user-select: none;
+  z-index: 1000;
+  transform-origin: bottom right;
+}
+
+.settings-panel.open {
+  display: flex;
+  animation: fadeScale .16s ease forwards;
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.settings-tabs {
+  flex: 0 0 110px;
+  border-right: 1px solid rgba(255, 255, 255, .12);
+  display: flex;
+  flex-direction: column;
+}
+
+.settings-tab {
+  background: none;
+  border: none;
+  color: #fff;
+  text-align: left;
+  padding: .8rem .9rem;
+  font-size: .82rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, .08);
+  transition: background .2s;
+}
+
+.settings-tab:hover,
+.settings-tab:focus-visible {
+  background: rgba(255, 255, 255, .08);
+}
+
+.settings-tab.selected {
+  background: rgba(255, 255, 255, .18);
+}
+
+.settings-content {
+  flex: 1 1 auto;
+  padding: 12px;
+  overflow: auto;
+}
+
+.settings-pane {
+  display: none;
+}
+
+.settings-pane.selected {
+  display: block;
+}
+
+/* vertical speed list */
+#pane-speed {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.speed-btn {
+  display: block;
+  width: 100%;
+  padding: .35rem 0;
+  background: rgba(255, 255, 255, .12);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: .85rem;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+.speed-btn:hover,
+.speed-btn:focus-visible {
+  background: rgba(255, 255, 255, .25);
+}
+
+.speed-btn.selected {
+  background: var(--highlight-1);
+  color: var(--primary-0);
+}
+
+/* ───────── THEATRE / AUTO-HIDE ───────── */
+body.theatre #chat-col {
+  display: none;
+}
+
+.player-shell.controls-hidden #ctrl-bar {
+  opacity: 0;
+  transform: translateY(40px);
+  pointer-events: none;
+}

@@ -1,0 +1,10 @@
+{
+  "development": {
+    "api_url": "http://127.0.0.1:5000/api",
+    "cdn_url": "http://127.0.0.1:5000/api/media"
+  },
+  "production": {
+    "api_url": "https://api.michimochievee-archive.win/v1",
+    "cdn_url": "https://cdn.michimochievee-archive.win"
+  }
+}

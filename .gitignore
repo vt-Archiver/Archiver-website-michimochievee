@@ -1,0 +1,17 @@
+~
+venv
+dump_tree.py
+dump.txt
+
+api/
+
+archive
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.db
+app.py
+Dockerfile
+docker-compose.yml
+static/assets

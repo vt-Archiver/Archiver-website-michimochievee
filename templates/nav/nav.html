@@ -1,0 +1,61 @@
+<header class="site-header" id="site-header">
+  <nav class="navbar">
+    <a href="{{ url_for('index') }}" class="nav-logo">
+      <img id="nav-pfp-home" src="" alt="Home">
+    </a>
+
+    <a href="{{ url_for('browse_page') }}" class="nav-browse">Browse</a>
+
+    <ul class="nav-inline" id="navInline">
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Themes ▼</a>
+        <ul class="dropdown-menu" id="themes-desktop"></ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Socials ▼</a>
+        <ul class="dropdown-menu" id="socials-desktop"></ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">About ▼</a>
+        <ul class="dropdown-menu">
+          <li class="dropdown-item"><a href="#about-page">About this page</a></li>
+          <li class="dropdown-item"><a href="#about-streamer">About the streamer</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a href="#" class="dropbtn">Resources ▼</a>
+        <ul class="dropdown-menu" id="resources-desktop"></ul>
+      </li>
+    </ul>
+
+    <div class="spacer"></div>
+
+    <div class="theme-toggle" id="themeToggle"><span id="themeIcon">☀</span></div>
+    <button id="burgerBtn" class="burger" aria-label="Menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </nav>
+
+  <!-- mobile slide-down panel -->
+  <ul class="nav-panel" id="navPanel">
+    <li class="dropdown">
+      <a href="#" class="dropbtn">Themes ▼</a>
+      <ul class="dropdown-menu" id="themes-mobile"></ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropbtn">Socials ▼</a>
+      <ul class="dropdown-menu" id="socials-mobile"></ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropbtn">About ▼</a>
+      <ul class="dropdown-menu">
+        <li class="dropdown-item"><a href="#about-page">About this page</a></li>
+        <li class="dropdown-item"><a href="#about-streamer">About the streamer</a></li>
+      </ul>
+    </li>
+    <li class="dropdown">
+      <a href="#" class="dropbtn">Resources ▼</a>
+      <ul class="dropdown-menu" id="resources-mobile"></ul>
+    </li>
+  </ul>
+</header>

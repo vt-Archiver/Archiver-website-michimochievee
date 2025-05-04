@@ -1,0 +1,184 @@
+openapi: 3.0.3
+info:
+  title: Michi Mochievee Archive API
+  version: "1.1.0"
+  description: |
+    Endpoints for browsing archived VODs, downloading media and
+    fetching live-chat replays.  All binary media is served directly;
+    thumbnails fall back to a placeholder PNG and therefore never
+    return 404.
+
+servers:
+  - url: https://api.michimochievee-archive.win/v1
+    description: Public production gateway
+  - url: https://michimochievee-archive.win/api
+    description: Direct prefix used by the single-page app
+
+paths:
+
+  /api/browse:
+    get:
+      summary: Browse content by type
+      parameters:
+        - name: type
+          in: query
+          description: Comma-separated list (streams, clips, vods, highlights)
+          schema: { type: string }
+        - { name: limit,  in: query, schema: { type: integer, maximum: 100, default: 12 } }
+        - { name: offset, in: query, schema: { type: integer, default: 0 } }
+      responses:
+        "200":
+          description: A list of content items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results: { type: array, items: { $ref: "#/components/schemas/ContentItem" } }
+                  total:   { type: integer }
+                  limit:   { type: integer }
+                  offset:  { type: integer }
+
+  /api/media/{type}/{id}:
+    get:
+      summary: Retrieve media (video, image, thumbnail, etc.)
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [streams, clips, vods, thumbnail, image]
+        - { name: id, in: path, required: true, schema: { type: string } }
+        - { name: format,   in: query, schema: { type: string, enum: [mp4, jpg, png, webp] } }
+        - { name: download, in: query, schema: { type: boolean, default: false } }
+      responses:
+        "200":
+          description: Binary media stream (real file **or** placeholder for thumbnails)
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        "404":
+          description: Media not found (never returned for thumbnails)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  # alias without /api – behaves identically
+  /media/thumbnail/{id}:
+    get:
+      summary: Shortcut for /api/media/thumbnail/{id}
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        "200":
+          description: Thumbnail image (real or placeholder)
+          content:
+            image/png: { schema: { type: string, format: binary } }
+            image/jpeg: { schema: { type: string, format: binary } }
+
+  /api/chat/{id}:
+    get:
+      summary: Live-chat messages for a VOD/stream (paged)
+      parameters:
+        - { name: id,     in: path,  required: true, schema: { type: string } }
+        - { name: after,  in: query, schema: { type: integer }, description: Offset cursor for forward-paging }
+        - { name: before, in: query, schema: { type: integer }, description: Offset cursor for reverse-paging }
+        - { name: limit,  in: query, schema: { type: integer, default: 300, maximum: 1000 } }
+        - { name: direction, in: query,
+            schema: { type: string, enum: [asc, desc], default: asc },
+            description: Sort order }
+      responses:
+        "200":
+          description: Chat page
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items: { $ref: "#/components/schemas/ChatMessage" }
+                  next_after:  { type: integer, nullable: true }
+                  prev_before: { type: integer, nullable: true }
+                  has_more:    { type: boolean }
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+
+  /api/search:
+    get:
+      summary: Search the archive (dummy implementation)
+      parameters:
+        - { name: query, in: query, schema: { type: string } }
+        - { name: type,  in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 10 } }
+        - { name: offset,in: query, schema: { type: integer, default: 0 } }
+      responses:
+        "200":
+          description: Matching items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results: { type: array, items: { $ref: "#/components/schemas/ContentItem" } }
+
+  /api/random:
+    get:
+      summary: Get random content (demo)
+      parameters:
+        - { name: type,  in: query, schema: { type: string } }
+        - { name: limit, in: query, schema: { type: integer, default: 2 } }
+      responses:
+        "200":
+          description: Random items
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: "#/components/schemas/ContentItem" }
+
+  /api/ping:
+    get:
+      summary: Health check
+      responses: { "200": { description: OK } }
+
+components:
+  schemas:
+
+    ContentItem:
+      type: object
+      properties:
+        id:         { type: string, example: "v2125456565" }
+        type:       { type: string, example: "vod" }
+        title:      { type: string }
+        thumbnail:  { type: string, format: uri }
+        view_count: { type: integer, example: 12345 }
+        duration:   { type: integer, description: Seconds }
+        date:       { type: string, format: date }
+        tags:       { type: array, items: { type: string } }
+
+    ChatMessage:
+      type: object
+      required: [id, t, abs, user, body]
+      properties:
+        id:   { type: string }
+        t:    { type: integer, description: Seconds from stream start }
+        abs:  { type: string, format: date-time }
+        user:
+          type: object
+          properties:
+            id:    { type: string }
+            name:  { type: string }
+            logo:  { type: string }
+            color: { type: string }
+        body: { type: string }
+        bits: { type: integer, nullable: true }
+
+    Error:
+      type: object
+      properties:
+        error: { type: string }

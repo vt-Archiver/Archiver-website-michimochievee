@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Michi Mochievee Archive{% endblock %}</title>
+
+  <!-- global styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='nav/nav-styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/scrollbars.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='mediacard/mediacard-styles.css') }}">
+
+  <!-- fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
+
+  <script>
+    window.staticUrl = "{{ url_for('static', filename='') }}";
+  </script>
+
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  {% block header %}
+  <header class="site-header" id="site-header">
+    <nav class="navbar">
+      <ul class="nav-menu">
+        <li class="nav-home">
+          <a href="{{ url_for('index') }}" id="nav-home-link">
+            <img id="nav-pfp-home" class="nav-pfp-home" src="" alt="Home">
+          </a>
+        </li>
+        <li><a href="{{ url_for('browse') }}?type=livestreams">Livestreams</a></li>
+        <li><a href="{{ url_for('browse') }}?type=videos">Videos</a></li>
+        <li class="dropdown theme-dropdown">
+          <a href="#" class="dropbtn">Themes ▼</a>
+          <ul class="dropdown-menu" id="theme-menu">
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Socials ▼</a>
+          <ul class="dropdown-menu" id="socials-menu">
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">About ▼</a>
+          <ul class="dropdown-menu">
+            <li class="dropdown-item"><a href="#about-page">About this page</a></li>
+            <li class="dropdown-item"><a href="#about-streamer">About the streamer</a></li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropbtn">Resources ▼</a>
+          <ul class="dropdown-menu" id="resources-menu">
+          </ul>
+        </li>
+      </ul>
+      <div class="theme-toggle" id="themeToggle">
+        <span id="themeIcon">☀</span>
+      </div>
+    </nav>
+  </header>
+  {% endblock %}
+
+  {% block content %}{% endblock %}
+
+  {% block footer %}
+  <footer class="site-footer">
+    <p>© 2025 VShojo Inc. All rights reserved.</p>
+    <p>This site is operated and owned by @Lypisorius aka Lypi.</p>
+    <p>All archived content is shown here with permission for the copyright holder,
+      VShojo Inc, granted through their talent, Michi Mochievee. The third-party content remains the property of its
+      respective owners.</p>
+  </footer>
+  {% endblock %}
+
+  <!-- global bootstrap & nav -->
+  <script src="{{ url_for('static', filename='js/loadPartials.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  <script src="{{ url_for('static', filename='nav/nav-script.js') }}"></script>
+</body>
+
+</html>

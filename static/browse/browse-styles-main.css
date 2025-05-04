@@ -1,0 +1,83 @@
+.browse-hero {
+  background-color: var(--primary-0);
+  color: var(--text-color);
+  text-align: center;
+  padding: 2rem;
+}
+
+.browse-hero .browse-title {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.browse-hero .browse-searchbar {
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.browse-hero .search-bar {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  border: 2px solid var(--highlight-1);
+  border-radius: 999px;
+  background-color: var(--primary-0);
+  color: var(--text-color);
+  outline: none;
+}
+
+.browse-hero .search-bar::placeholder {
+  color: var(--secondary-0);
+}
+
+.browse-hero .search-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  background-color: var(--highlight-0);
+  color: var(--primary-0);
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  outline: none;
+}
+
+.browse-hero .search-button:hover {
+  background-color: var(--highlight-1);
+}
+
+.browse-hero .browse-subtext {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.browse-filter-bar {
+  background-color: var(--primary-0);
+  padding: 1rem;
+  text-align: center;
+}
+
+.browse-filter-btn {
+  margin: 0 0.3rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  background-color: var(--highlight-0);
+  color: var(--primary-0);
+  font-size: 0.9rem;
+}
+
+.browse-filter-btn:hover {
+  background-color: var(--highlight-1);
+}
+
+.browse-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+  background-color: var(--primary-0);
+}

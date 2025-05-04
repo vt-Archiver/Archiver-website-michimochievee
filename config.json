@@ -1,0 +1,107 @@
+{
+    "streamer": {
+        "name": "Michi Mochievee",
+        "socials": {
+          "twitch": "https://www.twitch.tv/michimochievee",
+          "twitter": "https://x.com/MichiMochievee",
+          "bluesky": "https://bsky.app/profile/michimochievee.vshojo.com",
+          "mastodon": "",
+          "youtube": {
+              "id": "UCnS5IYNyGKOti9cFlK5SefQ",
+              "name": "MichiMochievee",
+              "url_id": "https://www.youtube.com/channel/UCnS5IYNyGKOti9cFlK5SefQ",
+              "url_name": "https://www.youtube.com/@MichiMochievee"
+          },
+          "discord": "https://discord.gg/Michi4Skin",
+          "tiktok": "https://www.tiktok.com/@michimochievee"
+        },
+        "language": [ "en", "id" ],
+        "pfp_url": "https://pbs.twimg.com/profile_images/1873411258638331905/G6DBazwk_200x200.jpg",
+        "pfp_url_correct_but_should_be_left_temporarily_unavalible": "https://avatars.githubusercontent.com/u/9919?s=280&v=4"
+    },
+    "resources": {
+      "michinomicon": "https://sites.google.com/view/michinomicon",
+      "michi_mochievee_archive_project": "https://sites.google.com/view/michi-mochievee-archive",
+      "api_docs": "/swagger/index.html"
+    },
+    "themes": [
+      {
+        "name": "original",
+        "start_time_cet": "2024/04/20 06:00",
+        "start_time": 1713585600,
+        "dark": {
+          "primary": ["#262A35"],
+          "secondary": ["#A569C0"],
+          "highlight": ["#FCFEEF", "#FE2C38"]
+        },
+        "light": {
+          "primary": ["#FCFEEF"],
+          "secondary": ["#A569C0"],
+          "highlight": ["#262A35", "#FE2C38"]
+        }
+      },
+      {
+        "name": "summer",
+        "start_time_cet": "2024/09/21 06:00",
+        "start_time": 1726891200,
+        "dark": {
+          "primary": ["#424449"],
+          "secondary": ["#B37AD2"],
+          "highlight": [ "#BDC1ED", "#FFBB75"]
+        },
+        "light": {
+          "primary": ["#FFEAE6"],
+          "secondary": ["#FF68A6"],
+          "highlight": ["#424449", "#E34933"]
+        }
+      },
+      {
+        "name": "hotdog",
+        "start_time_cet": "2024/10/27 05:00",
+        "start_time": 1730001600,
+        "end_time": 1730606400,
+        "dark": {
+          "primary": ["#74338D"],
+          "secondary": ["#E59E4E"],
+          "highlight": ["#B0FF4A", "#FB0734"]
+        },
+        "light": {
+          "primary": ["#FEFAF0"],
+          "secondary": ["#E59E4E"],
+          "highlight": ["#74338D", "#8DB766"]
+        },
+        "note": "Meme model (only ~1 week)"
+      },
+      {
+        "name": "teen",
+        "start_time_cet": "2024/12/29 06:00",
+        "start_time": 1735448400,
+        "dark": {
+          "primary": ["#1E2021"],
+          "secondary": ["#6D5591"],
+          "highlight": ["#F7F4FC", "#FC9EC9"]
+        },
+        "light": {
+          "primary": ["#F9F3FA"],
+          "secondary": ["#A66AC0"],
+          "highlight": ["#1E2021", "#FB9BC5"]
+        }
+      },
+      {
+        "name": "bunny",
+        "start_time_cet": "2025/02/15 05:00",
+        "start_time": 1740248400,
+        "dark": {
+          "primary": ["#191521"],
+          "secondary": ["#43444F"],
+          "highlight": ["#E4E1E2", "#CD95E7"]
+        },
+        "light": {
+          "primary": ["#F7F6F9"],
+          "secondary": ["#789BCD"],
+          "highlight": ["#43444F", "#7494cc"]
+        }
+      }
+    ]
+  }
+  
